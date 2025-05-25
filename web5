@@ -1,0 +1,24 @@
+sudo apt-get update
+sudo apt-get install -y docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker $USER
+
+create index.html
+echo '<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to web5</title>
+</head>
+<body>
+    <h1>Hello from Debian web5!</h1>
+</body>
+</html>' > index.html
+
+sudo docker run -d --name web5 -p 8000:80 httpd
+sudo docker cp index.html web5:/usr/local/apache2/htdocs/index.html
+
+open website
+
+update index.html
+sudo docker cp index.html web5:/usr/local/apache2/htdocs/index.html
