@@ -22,3 +22,38 @@ open website
 
 update index.html
 sudo docker cp index.html web5:/usr/local/apache2/htdocs/index.html
+
+-----------------------------------------------------------------------------
+create programing file
+create dockerfile (nano)
+--FROM python:3-slim
+
+COPY hello.py /hello.py
+
+CMD ["python3", "/hello.py"]
+
+sudo docker build -t v1 .
+sudo docker run --rm v1
+
+-----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
