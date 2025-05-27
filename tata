@@ -1,0 +1,67 @@
+CREATE DATABASE your_database_name;
+
+USE company_db;
+
+CREATE TABLE worker (
+  work_id INT(5) NOT NULL PRIMARY KEY,
+  firstname VARCHAR(10) NOT NULL,
+  lastname VARCHAR(10) NOT NULL,
+  salary INT(10) NOT NULL,
+  depart VARCHAR(10) NOT NULL
+);
+
+INSERT INTO worker (id, first_name, last_name, salary, department)
+VALUES
+    (1, 'monika', 'arora', 100000, 'HR'),
+    (2, 'rahul', 'sharma', 120000, 'IT'),
+    (3, 'neha', 'singh', 110000, 'Finance'),
+    (4, 'amit', 'verma', 95000, 'Marketing');
+
+
+SELECT * FROM worker WHERE salary BETWEEN 100000 AND 500000;
+
+SELECT firstname, COUNT(*) FROM worker WHERE depart='admin' GROUP BY firstname;
+
+-- Assumed Table: employee(emp_id, ename, job, sal, comm)
+
+-- 1. All records with sal > 2000 and comm > 200
+SELECT * FROM employee WHERE sal > 2000 AND comm > 200;
+
+-- 2. All records with job = 'Clerk' or sal > 2000
+SELECT * FROM employee WHERE job = 'Clerk' OR sal > 2000;
+
+-- 3. All records with sal = 1250 or 1100 or 2850
+SELECT * FROM employee WHERE sal IN (1250, 1100, 2850);
+
+-- 4. All employees with sal > 1250 and < 2850
+SELECT * FROM employee WHERE sal > 1250 AND sal < 2850;
+
+-- 5. All employees with ename ending with 'AS'
+SELECT * FROM employee WHERE ename LIKE '%AS';
+
+-- 6. All employees with job starting with 'C' and ending with 'K'
+SELECT * FROM employee WHERE job LIKE 'C%K';
+
+-- 7. Job with 'L' at 3rd position and 'M' at 3rd-last position
+SELECT * FROM employee WHERE job LIKE '__L%' AND job LIKE '%M__';
+
+-- 8. All records with sal NOT equal to 1250, 1100, or 2850
+SELECT * FROM employee WHERE sal NOT IN (1250, 1100, 2850);
+
+-- 9. All employees with sal NOT > 1250 AND < 2850
+SELECT * FROM employee WHERE NOT (sal > 1250 AND sal < 2850);
+
+-- 10. Job starts with 'C', 'E' at 3rd position, and ends with 'K'
+SELECT * FROM employee WHERE job LIKE 'C_E%K';
+
+-- 11. All rows with comm IS NULL
+SELECT * FROM employee WHERE comm IS NULL;
+
+-- 12. Employees with sal IS NULL and ename starting with 'S'
+SELECT * FROM employee WHERE sal IS NULL AND ename LIKE 'S%';
+
+-- 13. All employees with job containing exactly 5 characters
+SELECT * FROM employee WHERE LENGTH(job) = 5;
+
+-- 14. Employees with ename starting with 'A' and job containing 5 characters
+SELECT * FROM employee WHERE ename LIKE 'A%' AND LENGTH(job) = 5;
