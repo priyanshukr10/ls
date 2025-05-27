@@ -1,3 +1,55 @@
+-- 1. Create Department Table
+CREATE TABLE department (
+    dept_id INT PRIMARY KEY NOT NULL,
+    dept_name VARCHAR(50) NOT NULL
+);
+
+-- 2. Create Employee Table with Foreign Key to Department
+CREATE TABLE employee (
+    emp_id INT PRIMARY KEY NOT NULL,
+    emp_name VARCHAR(50) NOT NULL,
+    salary DECIMAL(10,2) NOT NULL,
+    dept_id INT NOT NULL,
+    CONSTRAINT fk_dept FOREIGN KEY (dept_id) REFERENCES department(dept_id)
+);
+
+-- 3. Insert Data into Department
+INSERT INTO department VALUES (1, 'HR');
+INSERT INTO department VALUES (2, 'IT');
+INSERT INTO department VALUES (3, 'Sales');
+
+-- 4. Insert Data into Employee
+INSERT INTO employee VALUES (101, 'Alice', 50000, 1);
+INSERT INTO employee VALUES (102, 'Bob', 60000, 2);
+INSERT INTO employee VALUES (103, 'Charlie', 55000, 2);
+INSERT INTO employee VALUES (104, 'David', 45000, 3);
+INSERT INTO employee VALUES (105, 'Eva', 47000, 1);
+
+-- a. List all employees with their department names
+SELECT e.emp_id, e.emp_name, e.salary, d.dept_name
+FROM employee e
+JOIN department d ON e.dept_id = d.dept_id;
+
+-- b. Departments with number of employees in each
+SELECT d.dept_name, COUNT(e.emp_id) AS emp_count
+FROM department d
+LEFT JOIN employee e ON d.dept_id = e.dept_id
+GROUP BY d.dept_name;
+
+-- c. Employee names and departments where salary > 50000
+SELECT e.emp_name, d.dept_name, e.salary
+FROM employee e
+JOIN department d ON e.dept_id = d.dept_id
+WHERE e.salary > 50000;
+
+-- d. All departments and their employee names (if any)
+SELECT d.dept_name, e.emp_name
+FROM department d
+LEFT JOIN employee e ON d.dept_id = e.dept_id;
+
+
+
+
 -- 1. Emp in dept 20, 30, 40
 SELECT ename AS Name, sal AS Salary, deptno FROM emp WHERE deptno IN (20, 30, 40);
 
