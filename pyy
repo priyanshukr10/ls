@@ -1,0 +1,244 @@
+text = input("Enter a word or number: ")
+if text == text[::-1]:
+    print("Yes, it's a palindrome!")
+else:
+    print("No, it's not a palindrome.")
+
+def factorial_recursive(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial_recursive(n - 1)
+
+n = int(input("Enter a number to find factorial using recursion: "))
+if n < 0:
+    print("Factorial is not defined for negative numbers.")
+else:
+    print(f"Factorial of {n} is: {factorial_recursive(n)}")
+
+def factorial_loop(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+n = int(input("Enter a number to find factorial using loop: "))
+if n < 0:
+    print("Factorial is not defined for negative numbers.")
+else:
+    print(f"Factorial of {n} is: {factorial_loop(n)}")
+
+def fibonacci_series(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [1]
+    elif n == 2:
+        return [1, 1]
+
+    fib = [1, 1]
+    while len(fib) < n:
+        fib.append(fib[-1] + fib[-2])
+    return fib
+  
+n = int(input("Enter how many Fibonacci numbers to generate: "))
+if n <= 0:
+    print("Please enter a positive number.")
+else:
+    print(f"First {n} Fibonacci numbers are: {fibonacci_series(n)}")
+
+*-----*
+ *---*
+  *-*
+   *
+  *-*
+ *---*
+*-----*
+n = 4  # Half of the pattern height
+
+# Upper part
+for i in range(n):
+    print(" " * i + "*" + "-" * (2 * (n - i) - 1) + "*") if (2 * (n - i) - 1) > 0 else print(" " * i + "*")
+
+# Lower part
+for i in range(n - 2, -1, -1):
+    print(" " * i + "*" + "-" * (2 * (n - i) - 1) + "*") if (2 * (n - i) - 1) > 0 else print(" " * i + "*")
+
+n = int(input("Enter the height (half) of the pattern: "))
+
+# Upper part
+for i in range(n):
+    dashes = 2 * (n - i) - 1
+    if dashes > 0:
+        print(" " * i + "*" + "-" * dashes + "*")
+    else:
+        print(" " * i + "*")
+
+# Lower part
+for i in range(n - 2, -1, -1):
+    dashes = 2 * (n - i) - 1
+    if dashes > 0:
+        print(" " * i + "*" + "-" * dashes + "*")
+    else:
+        print(" " * i + "*")
+
+
+🔹 1. Right-angled Triangle
+markdown
+Copy
+Edit
+*
+**
+***
+****
+python
+Copy
+Edit
+n = int(input("Enter rows: "))
+for i in range(1, n+1):
+    print("*" * i)
+🔹 2. Inverted Triangle
+markdown
+Copy
+Edit
+****
+***
+**
+*
+python
+Copy
+Edit
+n = int(input("Enter rows: "))
+for i in range(n, 0, -1):
+    print("*" * i)
+🔹 3. Pyramid
+markdown
+Copy
+Edit
+   *
+  ***
+ *****
+*******
+python
+Copy
+Edit
+n = int(input("Enter rows: "))
+for i in range(n):
+    print(" " * (n - i - 1) + "*" * (2*i + 1))
+🔹 4. Diamond
+markdown
+Copy
+Edit
+   *
+  ***
+ *****
+*******
+ *****
+  ***
+   *
+python
+Copy
+Edit
+n = int(input("Enter half height: "))
+for i in range(n):
+    print(" " * (n - i - 1) + "*" * (2*i + 1))
+for i in range(n-2, -1, -1):
+    print(" " * (n - i - 1) + "*" * (2*i + 1))
+🔹 5. Square Pattern
+markdown
+Copy
+Edit
+****
+****
+****
+****
+python
+Copy
+Edit
+n = int(input("Enter size: "))
+for i in range(n):
+    print("*" * n)
+🔹 6. Right-Aligned Triangle
+markdown
+Copy
+Edit
+   *
+  **
+ ***
+****
+python
+Copy
+Edit
+n = int(input("Enter rows: "))
+for i in range(1, n+1):
+    print(" " * (n - i) + "*" * i)
+🔹 7. Number Triangle
+yaml
+Copy
+Edit
+1
+12
+123
+1234
+python
+Copy
+Edit
+n = int(input("Enter rows: "))
+for i in range(1, n+1):
+    for j in range(1, i+1):
+        print(j, end="")
+    print()
+🔹 8. Alphabet Pattern
+css
+Copy
+Edit
+A
+AB
+ABC
+ABCD
+python
+Copy
+Edit
+n = int(input("Enter rows: "))
+for i in range(n):
+    for j in range(i+1):
+        print(chr(65 + j), end="")
+    print()
+🔹 9. Hollow Square
+markdown
+Copy
+Edit
+*****
+*   *
+*   *
+*****
+python
+Copy
+Edit
+n = int(input("Enter size: "))
+for i in range(n):
+    if i == 0 or i == n-1:
+        print("*" * n)
+    else:
+        print("*" + " " * (n - 2) + "*")
+🔹 10. X Pattern
+markdown
+Copy
+Edit
+*   *
+ * *
+  *
+ * *
+*   *
+python
+Copy
+Edit
+n = int(input("Enter size (odd): "))
+for i in range(n):
+    for j in range(n):
+        if j == i or j == n - i - 1:
+            print("*", end="")
+        else:
+            print(" ", end="")
+    print()
+
