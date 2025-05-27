@@ -40,3 +40,100 @@ GROUP BY pname;
 SELECT company, pname, AVG(amount) AS avg_amount
 FROM product
 GROUP BY company, pname;
+
+
+
+-- SESSION 1: DATABASE BASICS & DDL
+-- Create database and user
+CREATE DATABASE company;
+CREATE USER 'john'@'localhost' IDENTIFIED BY 'pass123';
+GRANT ALL PRIVILEGES ON company.* TO 'john'@'localhost';
+
+-- Use the database
+USE company;
+
+-- Create tables with constraints
+CREATE TABLE department (
+    dept_id INT PRIMARY KEY NOT NULL,
+    dept_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE employee (
+    emp_id INT PRIMARY KEY NOT NULL,
+    emp_name VARCHAR(50) NOT NULL,
+    age INT,
+    salary DECIMAL(10,2) NOT NULL,
+    dept_id INT NOT NULL,
+    CONSTRAINT fk_dept FOREIGN KEY (dept_id) REFERENCES department(dept_id)
+);
+
+-- Insert sample data
+INSERT INTO department VALUES (1, 'HR'), (2, 'IT'), (3, 'Sales');
+INSERT INTO employee VALUES
+(101, 'Alice', 30, 50000, 1),
+(102, 'Bob', 28, 60000, 2),
+(103, 'Charlie', 32, 55000, 2),
+(104, 'David', 29, 45000, 3),
+(105, 'Eva', 31, 47000, 1);
+
+-- Alter / Drop
+ALTER TABLE employee ADD join_date DATE;
+DROP TABLE IF EXISTS temp_table;
+DROP DATABASE IF EXISTS temp_db;
+
+-- SESSION 2 & 3: SELECT, FILTERS, JOINS, ORDER
+SELECT emp_name, age FROM employee;
+SELECT * FROM employee WHERE age > 25;
+SELECT * FROM employee WHERE emp_name LIKE 'A%' OR emp_name LIKE '%s';
+SELECT * FROM employee WHERE age BETWEEN 25 AND 35;
+SELECT * FROM employee ORDER BY age DESC;
+
+-- Joins and Aliases
+SELECT e.emp_name AS Name, d.dept_name AS Department
+FROM employee e
+JOIN department d ON e.dept_id = d.dept_id;
+
+-- SESSION 4 & 5: AGGREGATE FUNCTIONS, GROUP BY, HAVING
+SELECT COUNT(*) AS Total_Employees FROM employee;
+SELECT AVG(salary) AS Avg_Salary FROM employee;
+SELECT dept_id, COUNT(*) FROM employee GROUP BY dept_id;
+SELECT dept_id, AVG(salary) FROM employee GROUP BY dept_id HAVING AVG(salary) > 50000;
+
+-- Subquery
+SELECT emp_name FROM employee
+WHERE salary > (SELECT AVG(salary) FROM employee);
+
+-- Correlated subquery
+SELECT emp_name FROM employee e1
+WHERE salary > (SELECT AVG(salary) FROM employee e2 WHERE e1.dept_id = e2.dept_id);
+
+-- DML: INSERT, UPDATE, DELETE
+INSERT INTO employee VALUES (106, 'Frank', 33, 62000, 2);
+UPDATE employee SET salary = salary + 5000 WHERE dept_id = 1;
+DELETE FROM employee WHERE emp_id = 106;
+
+-- TRANSACTIONS
+START TRANSACTION;
+UPDATE employee SET salary = salary + 1000 WHERE dept_id = 2;
+SAVEPOINT bonus_given;
+UPDATE employee SET salary = salary + 2000 WHERE dept_id = 3;
+ROLLBACK TO bonus_given;
+COMMIT;
+
+-- INDEXES
+CREATE INDEX idx_emp_name ON employee(emp_name);
+
+-- VIEWS
+CREATE VIEW high_earners AS
+SELECT emp_name, salary FROM employee WHERE salary > 55000;
+
+-- EXTRA PRACTICE: DATE FILTERS & FUNCTIONS
+SELECT emp_name FROM employee WHERE MONTH(join_date) = 9;
+SELECT emp_id, emp_name FROM employee WHERE YEAR(join_date) BETWEEN 1981 AND 1983;
+SELECT emp_id, emp_name FROM employee WHERE DAY(join_date) = 3;
+
+-- TOOLS
+SHOW DATABASES;
+USE company;
+SHOW TABLES;
+DESCRIBE employee;
