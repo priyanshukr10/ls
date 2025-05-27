@@ -1,0 +1,42 @@
+-- 1. Create the product table with NOT NULL constraints
+CREATE TABLE product (
+    pid INT PRIMARY KEY NOT NULL,
+    pname VARCHAR(50) NOT NULL,
+    qty INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    company VARCHAR(50) NOT NULL
+);
+
+-- 2. Insert sample data (7 rows)
+INSERT INTO product VALUES (1, 'Mouse', 100, 250.00, 'Logitech');
+INSERT INTO product VALUES (2, 'Keyboard', 75, 500.00, 'Logitech');
+INSERT INTO product VALUES (3, 'Monitor', 50, 7500.00, 'Samsung');
+INSERT INTO product VALUES (4, 'Printer', 30, 8500.00, 'HP');
+INSERT INTO product VALUES (5, 'Laptop', 20, 55000.00, 'Dell');
+INSERT INTO product VALUES (6, 'Router', 60, 3000.00, 'TP-Link');
+INSERT INTO product VALUES (7, 'Webcam', 80, 1500.00, 'Logitech');
+
+-- a. Total amount and quantity sold per company
+SELECT company, SUM(amount) AS total_amount, SUM(qty) AS total_quantity
+FROM product
+GROUP BY company;
+
+-- b. Number of products per company
+SELECT company, COUNT(*) AS product_count
+FROM product
+GROUP BY company;
+
+-- c. Product name, company, and total amount for each company
+SELECT pname, company, SUM(amount) AS total_amount
+FROM product
+GROUP BY pname, company;
+
+-- d. Average amount per product
+SELECT pname, AVG(amount) AS avg_amount
+FROM product
+GROUP BY pname;
+
+-- e. Company, product name, and average amount (product-wise)
+SELECT company, pname, AVG(amount) AS avg_amount
+FROM product
+GROUP BY company, pname;
